@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import './navbar.css';
+import logo from '../assets/PET FINDER_adobe_express.svg';
+import '../login/login.css';
 
 function NavBar({isLoggenIn,setIsLoggedIn}){
     let nav = useNavigate();
@@ -20,8 +22,7 @@ function NavBar({isLoggenIn,setIsLoggedIn}){
                 <div class="container-fluid">
                     {/* Logoimage and text  */}
                     <Link class="navbar-brand" to="/home" href="#">
-                    <img src="/pet-finder/src/assets/PET FINDER.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top"/>
-                    PetFinder
+                    <img src={logo} alt="Logo" width="100" height="80" class="d-inline-block align-text-top"/>
                     </Link>
 
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
