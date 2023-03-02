@@ -1,12 +1,8 @@
-import React, {useEffect,useState} from "react";
-// import Animated from "./Animated";
-import About from "../about/About";
-// import './about.css'
-// import { Link } from "react-router-dom";
-//import homepag from '../assets/homepg.svg';
-//import homepage from '../assets/homepage.jpg';
-import Petlist from "../petlist/PetList";
+import React from "react";
 import './home.css';
+import About from "../about/About";
+import Petlist from "../petlist/PetList";
+
 
 
 function Home() {
@@ -15,8 +11,9 @@ function Home() {
     <div>
         <div className="hero">
             <div className="text">
-                {/* <h1>Welcome to PetFinder</h1> */}
+                
                 <div className="position-absolute top-50 start-50 translate-middle-x">
+                <h2>Welcome to PetFinder</h2>
                 <form className="d-flex">
                     <input className="form-control me-3" type="search" placeholder="Find a pet...." aria-label="Search"/>
                     <button className="btn btn-outline-light" type="submit"><strong>Search</strong></button>
@@ -24,8 +21,10 @@ function Home() {
                 </div>
             </div>
         </div>
+        <Petlist/>
+        <About/>  
     </div>
-        
+      
     );       
 }
 

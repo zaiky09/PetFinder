@@ -3,7 +3,7 @@ import { useNavigate,Link } from "react-router-dom";
 import logo from '../assets/PET FINDER_adobe_express.svg';
 import '../login/login.css';
 
-function Login() {
+function Login({setIsLoggedIn, isLoggedIn}) {
  
   const [formData, setFormData] = useState({
     email: "",
@@ -21,7 +21,7 @@ function Login() {
 
   function handleSubmit(e) {
     e.preventDefault();
-        
+        setIsLoggedIn (true);
         nav("/home");
       
     }

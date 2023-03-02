@@ -1,4 +1,21 @@
-.flex {
+/* .flex {
     display: flex;
     flex-wrap: wrap;
+} */
+
+#list {
+    display: flex;
+      flex-direction: column;
+      background-image: linear-gradient(to bottom, #F4DFCA, white);
+      /* background-color: #F4DFCA; */
+      align-self: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      align-items: center;
+      justify-content: center;
+}
+
+#p1 {
+    size: 50px;
 }

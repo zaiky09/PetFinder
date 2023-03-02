@@ -1,0 +1,26 @@
+.about-us {
+      display: flex;
+      flex-direction: column;
+      /* background-image: linear-gradient(to bottom,black, #F4DFCA); */
+      /* background-color: #F4DFCA; */
+      align-self: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      align-items: center;
+      justify-content: center;
+      color: white;
+}
+
+#conta {
+    color: #462B45 !important;
+    /* align-items:flex-start; */
+}
+
+.parabout {
+    font-size: 25px !important;
+}
+
+h1 {
+    text-decoration: overline;
+}
