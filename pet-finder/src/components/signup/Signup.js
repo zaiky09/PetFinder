@@ -1,5 +1,7 @@
 import React,{useState} from "react";
 import { useNavigate,Link } from "react-router-dom";
+import logo from '../assets/PET FINDER_adobe_express.svg';
+import '../signup/signup.css';
 
 function Signup({setIsLoggedIn}){
    const [formData, setFormData] = useState({
@@ -26,80 +28,75 @@ function Signup({setIsLoggedIn}){
       
     }
     return (
-        <div className="container">
-          <h1 className="text-center mb-4">Sign Up</h1>
+        <div className="container-fluid" id="sign">
+          <img src={logo} alt="Logo" width="200" height="180" class="d-inline-block align-text-top"/>
+            <form onSubmit={handleSubmit} className="row g-3 mt-4">
+                <center>
+                    <div className="form-group mb-2 col-md-4">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="First Name"
+                        name="firstname"
+                        id="firstname"
+                        onChange={handleChange}
+                        value={formData.firstname}
+                    />
+                    </div>
+                    <div className="form-group mb-2 col-md-4"> 
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Last Name"
+                        name="lastname"
+                        id="lastname"
+                        onChange={handleChange}
+                        value={formData.lastname}
+                    />
+                    </div>
+                    <div className="form-group mb-2 col-4 align-items-center">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="@Username"
+                        name="username"
+                        id="username"
+                        onChange={handleChange}
+                        value={formData.username}
+                    />
+                    </div>
+                    <div className="form-group mb-2 col-md-4">
+                    <input
+                        type="email"
+                        className="form-control"
+                        placeholder="Email Address"
+                        name="email"
+                        id="email"
+                        onChange={handleChange}
+                        value={formData.email}
+                    />
+                    </div>
+                    <div className="form-group mb-4 col-md-4">
+                    <input
+                        type="password"
+                        className="form-control"
+                        placeholder="Password"
+                        name="password"
+                        id="password"
+                        onChange={handleChange}
+                        value={formData.password}
+                    />
+                    </div>
+        
+                    <button type="submit" className="btn btn-outline-dark mb-4"><strong>Signup</strong></button>
+                    
+                    <p className="forgot-password text-right">
+                        Already registered <Link to="/">Login?</Link>
+                    </p>
 
-          <form onSubmit={handleSubmit} className="row g-3">
-        <div className="form-group mb-2 col-md-6">
-          <label htmlFor="firstname">First Name</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="First Name"
-            name="firstname"
-            id="firstname"
-            onChange={handleChange}
-            value={formData.firstname}
-          />
-        </div>
-        <div className="form-group mb-2 col-md-6">
-          <label htmlFor="lastname">Last Name</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Last Name"
-            name="lastname"
-            id="lastname"
-            onChange={handleChange}
-            value={formData.lastname}
-          />
-        </div>
-        <div className="form-group mb-2 col-6 align-items-center">
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Username"
-            name="username"
-            id="username"
-            onChange={handleChange}
-            value={formData.username}
-          />
-        </div>
-        <div className="form-group mb-2 col-md-6">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Email Address"
-            name="email"
-            id="email"
-            onChange={handleChange}
-            value={formData.email}
-          />
-        </div>
-        <div className="form-group mb-4 col-md-6">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Password"
-            name="password"
-            id="password"
-            onChange={handleChange}
-            value={formData.password}
-          />
-        </div>
-        <center><button type="submit" className="btn btn-primary mb-4">Submit</button></center>
-
-        <center>
-        <p className="forgot-password text-right">
-          Already registered <Link to="/">Login?</Link>
-        </p>
-        </center>
-      </form>
-      
+                </center>
+            </form>
         </div>
     );
 }
-export default Signup
+export default Signup;

@@ -1,3 +1,23 @@
-.container {
-    background-image: '../assets/PET FINDER_adobe_express.svg';
+/* Login page */
+#log{
+    /* background-image: url('../assets/PET FINDER_adobe_express.svg'); */
+    /* background-size: cover; */
+    /* background-color: (#462B45) ; */
+    background-image: linear-gradient(to bottom,#F4DFCA, white);
+    /* height: 800px; */
+    background-blend-mode: color-burn;
+}
+
+form {
+    margin-top: 80px;
+}
+
+h1 {
+    padding-top: 50px;
+    color: #462B45 !important;
+    /* text-decoration: overline; */
+}
+
+p {
+    color: #462B45 !important;
 }

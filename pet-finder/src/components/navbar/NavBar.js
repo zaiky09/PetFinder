@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import './navbar.css';
-import logo from '../assets/PET FINDER_adobe_express.svg';
-import '../login/login.css';
+import '../navbar/navbar.css';
+//import logo from '../assets/PET FINDER_adobe_express.svg';
 
 function NavBar({isLoggenIn,setIsLoggedIn}){
     let nav = useNavigate();
@@ -18,36 +17,67 @@ function NavBar({isLoggenIn,setIsLoggedIn}){
     return(
         <div>
 
-            <nav class="navbar bg-body-tertiary" style={{backgroundColor: "FFFFFF"}}>
-                <div class="container-fluid">
-                    {/* Logoimage and text  */}
-                    <Link class="navbar-brand" to="/home" href="#">
-                    <img src={logo} alt="Logo" width="100" height="80" class="d-inline-block align-text-top"/>
-                    </Link>
-
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
+            <nav className="navbar navbar-expand-lg bg-body-custom" id="bcolor">
+                <div className="container-fluid">
+                    <Link className="navbar-brand" to="/home" href="#"><strong>PetFinder</strong></Link>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
                     </button>
-
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                            <Link class="nav-link" to="/about">About</Link>
+                    <div className="collapse navbar-collapse" id="navbarNav">
+                        <ul className="navbar-nav">
+                            <li className="nav-item">
+                            <Link className="nav-link active" aria-current="page" to="/about" href="#">About Us</Link>
                             </li>
-                            <li class="nav-item">
-                            <Link class="nav-link" to="/contact">Contact</Link>
+                            <li className="nav-item">
+                            <Link className="nav-link" to="/contact" href="#">Contact Us</Link>
                             </li>
-                            <li class="nav-item">
-                            <Link class="nav-link" to="/" onClick={handleLogout}>Logout</Link>
+                            <li className="nav-item">
+                            <Link className="nav-link" href="#">Pet List</Link>
+                            </li>
+                        </ul>
+                        <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li className="nav-item">
+                            <Link className="nav-link" to="/" onClick={handleLogout}>Log out</Link>
                             </li>
                         </ul>
                     </div>
-
                 </div>
             </nav>
-
         </div>
     );
 }
 
 export default NavBar;
+
+
+            // {/* <nav class="navbar bg-body-tertiary bg-custom">
+            //     <div class="container-fluid" >
+            //          #Logoimage and text  
+            //         <img src={logo} alt="Logo" width="70" height="50" class="d-inline-block align-text-top"/>
+            //         <Link class="navbar-brand" to="/home" href="#"> 
+            //         <span class="navbar-brand mb-0 h1">PetFinder</span>
+            //         </Link>
+                    
+
+            //         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            //             <span class="navbar-toggler-icon"></span>
+            //         </button>
+
+            //         <div class="collapse navbar-collapse" id="navbarNav">
+            //             <ul class="navbar-nav">
+            //                 <li class="nav-item">
+            //                 <Link class="nav-link" to="/about">About</Link>
+            //                 </li>
+            //                 <li class="nav-item">
+            //                 <Link class="nav-link" to="/contact">Contact</Link>
+            //                 </li>
+            //                 <li class="nav-item">
+            //                 <Link class="nav-link" to="/" onClick={handleLogout}>Logout</Link>
+            //                 </li>
+            //             </ul>
+            //         </div>
+
+            //     </div>
+            // </nav> */}
+
+        
