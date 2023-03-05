@@ -1,108 +1,326 @@
 import React from 'react';
-import cat from '../assets/cats.jpg';
-import hamster from '../assets/hmaster.jpg';
-import dog from '../assets/dogs.jpg';
 import '../petlist/petlist.css';
 
-function Petlist () {
+function Petlist() {
+  const [pets, setPets] = React.useState([]);
 
+  React.useEffect(() => {
+    fetch("http://shibe.online/api/shibes?count=6&urls=true&httpsUrls=true")
+      .then((response) => response.json())
+      .then((data) => setPets(data))
+      .catch((error) => console.log(error));
+  }, []);
 
-    return (
-        <div>
-           
-            <div className="album py-5 bg-light" id="list">
-                <div className="container">
-                    <div className="row">
-                        <h1 className="text-start mb-5" id="header"> BROWSE CATEGORIES </h1> 
+//   const [likedPets, setLikedPets] = React.useState([]);
 
-                        <div className="col-md-4">
-                            <div className="card mb-4 shadow-sm">
-                                <img src={cat} className="card-img-top" alt="Cat"/>
-                                <div className="card-body">
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <div className="btn-group">
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="card mb-4 shadow-sm">
-                                <img src={hamster} className="card-img-top" alt="Cat"/>
-                                <div className="card-body">
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <div className="btn-group">
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="card mb-4 shadow-sm">
-                                <img src={dog} className="card-img-top" alt="Cat"/>
-                                <div className="card-body">
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <div className="btn-group">
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="card mb-4 shadow-sm">
-                                <img src={hamster} className="card-img-top" alt="Cat"/>
-                                <div className="card-body">
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <div className="btn-group">
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="card mb-4 shadow-sm">
-                                <img src={cat} className="card-img-top" alt="Cat"/>
-                                <div className="card-body">
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <div className="btn-group">
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="card mb-4 shadow-sm">
-                                <img src={dog} className="card-img-top" alt="Cat"/>
-                                <div className="card-body">
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <div className="btn-group">
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+  const handleView = (pet) => {
+    // Show a modal or navigate to a new page to display the pet
+    console.log(`Viewing pet ${pet}`);
+  };
+
+  const handleDelete = (pet) => {
+    // Remove the pet from the list of pets
+    setPets(pets.filter((p) => p !== pet));
+    console.log(`Deleted pet ${pet}`);
+  };
+
+//   const handleLike = (pet) => {
+//     // Add or remove the pet from the user's liked pets list
+//     if (likedPets.includes(pet)) {
+//       setLikedPets(likedPets.filter((p) => p !== pet));
+//     } else {
+//       setLikedPets([...likedPets, pet]);
+//     }
+//   };
+
+  return (
+    <div>
+      <div className="album py-5 bg-light" id="list">
+        <div className="container">
+        <h1 className='text-start mb-5'>Browse Pets</h1>
+          <div className="row">
+            {pets.map((pet, index) => (
+              <div className="col-md-4" key={index}>
+                <div className="card mb-4 shadow-sm">
+                  <img src={pet} className="card-img-top" alt="Pet" />
+                  <div className="card-body">
+                    <div className="d-flex justify-content-between align-items-center">
+                      <div className="btn-group">
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-outline-secondary"
+                          onClick={() => handleView(pet)}
+                        >
+                          View
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-outline-secondary"
+                          onClick={() => handleDelete(pet)}
+                        >
+                          Delete
+                        </button>
+                        {/* <button
+                          type="button"
+                          className={`btn btn-sm btn-outline-secondary like-button ${
+                            likedPets.includes(pet) ? 'liked' : ''
+                          }`}
+                          onClick={() => handleLike(pet)}
+                        >
+                          <span role="img" aria-label="heart">
+                            ❤️
+                          </span>
+                        </button> */}
+                      </div>
                     </div>
+                  </div>
                 </div>
-            </div>
-            
+              </div>
+            ))}
+          </div>
         </div>
-    )
-
+      </div>
+    </div>
+  );
 }
 
 export default Petlist;
+
+
+
+// import React from 'react';
+// import '../petlist/petlist.css';
+
+// function Petlist() {
+//   const [pets, setPets] = React.useState([]);
+
+//   React.useEffect(() => {
+//     fetch("http://shibe.online/api/shibes?count=6&urls=true&httpsUrls=true")
+//       .then((response) => response.json())
+//       .then((data) => setPets(data))
+//       .catch((error) => console.log(error));
+//   }, []);
+
+//   const handleView = (pet) => {
+//     // Show a modal or navigate to a new page to display the pet
+//     console.log(`Viewing pet ${pet}`);
+//   };
+
+//   const handleDelete = (pet) => {
+//     // Remove the pet from the list of pets
+//     setPets(pets.filter((p) => p !== pet));
+//     console.log(`Deleted pet ${pet}`);
+//   };
+
+//   const handleLike = (pet) => {
+//     // Add or remove the pet from the user's liked pets list
+//     console.log(`Liked pet ${pet}`);
+//   };
+
+//   return (
+//     <div>
+//       <div className="album py-5 bg-light" id="list">
+//         <div className="container">
+//           <div className="row">
+//             {pets.map((pet, index) => (
+//               <div className="col-md-4" key={index}>
+//                 <div className="card mb-4 shadow-sm">
+//                   <img src={pet} className="card-img-top" alt="Pet" />
+//                   <div className="card-body">
+//                     <div className="d-flex justify-content-between align-items-center">
+//                       <div className="btn-group">
+//                         <button
+//                           type="button"
+//                           className="btn btn-sm btn-outline-secondary"
+//                           onClick={() => handleView(pet)}
+//                         >
+//                           View
+//                         </button>
+//                         <button
+//                           type="button"
+//                           className="btn btn-sm btn-outline-secondary"
+//                           onClick={() => handleDelete(pet)}
+//                         >
+//                           Delete
+//                         </button>
+//                         <button
+//                           type="button"
+//                           className="btn btn-sm btn-outline-secondary"
+//                           onClick={() => handleLike(pet)}
+//                         >
+//                           Like
+//                         </button>
+//                       </div>
+//                     </div>
+//                   </div>
+//                 </div>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default Petlist;
+
+
+
+
+// import React from 'react';
+// import '../petlist/petlist.css';
+
+
+
+
+// function Petlist() {
+//     const [pets, setPets] = React.useState([]);
+  
+//     React.useEffect(() => {
+//       fetch("http://shibe.online/api/shibes?count=6&urls=true&httpsUrls=true")
+//         .then((response) => response.json())
+//         .then((data) => setPets(data))
+//         .catch((error) => console.log(error));
+//     }, []);
+  
+//     return (
+//       <div>
+//         <div className="album py-5 bg-light" id="list">
+//           <div className="container">
+//             <div className="row">
+//               {pets.map((pet, index) => (
+//                 <div className="col-md-4" key={index}>
+//                   <div className="card mb-4 shadow-sm">
+//                     <img src={pet} className="card-img-top" alt="Pet" />
+//                     <div className="card-body">
+//                       <div className="d-flex justify-content-between align-items-center">
+//                         <div className="btn-group">
+//                           <button
+//                             type="button"
+//                             className="btn btn-sm btn-outline-secondary"
+//                           >
+//                             View
+//                           </button>
+//                           <button
+//                             type="button"
+//                             className="btn btn-sm btn-outline-secondary"
+//                           >
+//                             Edit
+//                           </button>
+//                         </div>
+//                       </div>
+//                     </div>
+//                   </div>
+//                 </div>
+//               ))}
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     );
+//   }
+  
+
+// function Petlist () {
+
+
+//     return (
+//         <div>
+           
+//             <div className="album py-5 bg-light" id="list">
+//                 <div className="container">
+//                     <div className="row">
+//                         <h1 className="text-start mb-5" id="header"> BROWSE CATEGORIES </h1> 
+
+//                         <div className="col-md-4">
+//                             <div className="card mb-4 shadow-sm">
+//                                 <img src={cat} className="card-img-top" alt="Cat"/>
+//                                 <div className="card-body">
+//                                     <div className="d-flex justify-content-between align-items-center">
+//                                         <div className="btn-group">
+//                                             <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
+//                                             <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
+//                                         </div>
+//                                     </div>
+//                                 </div>
+//                             </div>
+//                         </div>
+//                         <div className="col-md-4">
+//                             <div className="card mb-4 shadow-sm">
+//                                 <img src={hamster} className="card-img-top" alt="Cat"/>
+//                                 <div className="card-body">
+//                                     <div className="d-flex justify-content-between align-items-center">
+//                                         <div className="btn-group">
+//                                             <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
+//                                             <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
+//                                         </div>
+//                                     </div>
+//                                 </div>
+//                             </div>
+//                         </div>
+//                         <div className="col-md-4">
+//                             <div className="card mb-4 shadow-sm">
+//                                 <img src={dog} className="card-img-top" alt="Cat"/>
+//                                 <div className="card-body">
+//                                     <div className="d-flex justify-content-between align-items-center">
+//                                         <div className="btn-group">
+//                                             <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
+//                                             <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
+//                                         </div>
+//                                     </div>
+//                                 </div>
+//                             </div>
+//                         </div>
+//                         <div className="col-md-4">
+//                             <div className="card mb-4 shadow-sm">
+//                                 <img src={hamster} className="card-img-top" alt="Cat"/>
+//                                 <div className="card-body">
+//                                     <div className="d-flex justify-content-between align-items-center">
+//                                         <div className="btn-group">
+//                                             <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
+//                                             <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
+//                                         </div>
+//                                     </div>
+//                                 </div>
+//                             </div>
+//                         </div>
+//                         <div className="col-md-4">
+//                             <div className="card mb-4 shadow-sm">
+//                                 <img src={cat} className="card-img-top" alt="Cat"/>
+//                                 <div className="card-body">
+//                                     <div className="d-flex justify-content-between align-items-center">
+//                                         <div className="btn-group">
+//                                             <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
+//                                             <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
+//                                         </div>
+//                                     </div>
+//                                 </div>
+//                             </div>
+//                         </div>
+//                         <div className="col-md-4">
+//                             <div className="card mb-4 shadow-sm">
+//                                 <img src={dog} className="card-img-top" alt="Cat"/>
+//                                 <div className="card-body">
+//                                     <div className="d-flex justify-content-between align-items-center">
+//                                         <div className="btn-group">
+//                                             <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
+//                                             <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
+//                                         </div>
+//                                     </div>
+//                                 </div>
+//                             </div>
+//                         </div>
+//                     </div>
+//                 </div>
+//             </div>
+            
+//         </div>
+//     )
+
+// }
+
+// export default Petlist;
 
 // {/* <h1>PET COLLECTION</h1> */}
 //             {/* <div id="carouselExample" class="carousel slide">

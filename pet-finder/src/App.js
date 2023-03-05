@@ -1,4 +1,3 @@
-// import logo from './logo.svg';
 import React, {useState} from 'react';
 import './App.css';
 import Home from './components/home/Home';
@@ -7,7 +6,7 @@ import About from './components/about/About';
 import Login from './components/login/Login';
 import Signup from './components/signup/Signup';
 import Petlist from './components/petlist/PetList';
-//import Contact from './components/contact/Contact';
+import Contact from './components/contact/Contact';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 
@@ -18,14 +17,15 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <NavBar
+      {isLoggedIn?
+      (<NavBar
       isLoggedIn={isLoggedIn}
-      setIsLoggedIn={setIsLoggedIn}/>
+      setIsLoggedIn={setIsLoggedIn}/>):(null)}
       <Routes>
         <Route path="/home" element={<Home />} />
         <Route path="/petlist" element={<Petlist />} />
         <Route path="/about" element={<About />} />
-        {/* <Route path="/contact" element={<Contact />} /> */}
+        <Route path="/contact" element={<Contact />} />
         <Route path="/" element={<Login 
         isLoggedIn={isLoggedIn}
         setIsLoggedIn={setIsLoggedIn}/>} />

@@ -14,7 +14,7 @@ function About(){
               <div className="album py-5 bg-light" id="list">
                 <div className="container">
                     <div className="row">
-                    <h1 className="text-center mb-5" id="header"> ABOUT US </h1> 
+                    <h1 className="text-center mb-5" id="header"> About Us </h1> 
 
                         <div className="col-md-4">
                             <div className="card mb-4 shadow-sm">

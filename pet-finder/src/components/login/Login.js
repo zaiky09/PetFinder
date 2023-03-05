@@ -3,7 +3,7 @@ import { useNavigate,Link } from "react-router-dom";
 import logo from '../assets/PET FINDER_adobe_express.svg';
 import '../login/login.css';
 
-function Login({setIsLoggedIn, isLoggedIn}) {
+function Login({setIsLoggedIn}) {
  
   const [formData, setFormData] = useState({
     email: "",
@@ -21,8 +21,29 @@ function Login({setIsLoggedIn, isLoggedIn}) {
 
   function handleSubmit(e) {
     e.preventDefault();
-        setIsLoggedIn (true);
-        nav("/home");
+
+        fetch('http://127.0.0.1:9292/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password,
+          }),
+        })
+        .then(response => {
+          if (response.ok) {
+             setIsLoggedIn(true);
+            nav("/home");
+          } else {
+            throw new Error('Something went wrong');
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });   
+      
       
     }
 
