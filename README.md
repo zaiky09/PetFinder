@@ -16,7 +16,7 @@ Visual Studio Code.
 Live server extension.
 ### Link to webpage
 
-          bot-battlr-beta.vercel.app/
+          https://pet-finder-one.vercel.app/home
 
 #### Alternative One
 Open a terminal / command line interface on your computer.
