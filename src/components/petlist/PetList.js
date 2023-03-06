@@ -18,7 +18,7 @@ function Petlist({userId}) {
     })
 
   React.useEffect(() => {
-    fetch(`http://localhost:9292/pet`)
+    fetch(`https://zamil-petfinder.onrender.com/pet`)
       .then((response) => response.json())
       .then((data) => setPets(data.data))
       .catch((error) => console.log(error));
@@ -52,7 +52,7 @@ function Petlist({userId}) {
           character: newData.character,
         
         }));
-        fetch(`http://localhost:9292/pets/create`, {
+        fetch(`https://zamil-petfinder.onrender.com/pets/create`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -72,7 +72,7 @@ function Petlist({userId}) {
             return response.json();
           })
           .then((data) => {
-            fetch(`http://localhost:9292/pet`)
+            fetch(`https://zamil-petfinder.onrender.com/pet`)
             .then(res => res.json())
             .then(data => setPets(data.data));
             activatePopTwo()
@@ -94,7 +94,7 @@ function Petlist({userId}) {
 
         }))
 
-        fetch(`http://localhost:9292/pets/update/${id}`, {
+        fetch(`https://zamil-petfinder.onrender.com/pets/update/${id}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json'
@@ -138,7 +138,7 @@ function Petlist({userId}) {
       //Delete Pet
 
       function handleDeletePet(id) {
-        fetch(`http://localhost:9292/pets/destroy/${id}`, {
+        fetch(`https://zamil-petfinder.onrender.com/pets/destroy/${id}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json'
