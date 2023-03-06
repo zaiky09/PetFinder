@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit,faTrash,faAdd } from "@fortawesome/free-solid-svg-icons";
 import PopAdd from "../pop_ups/PopAdd";
 import PopUpdate from "../pop_ups/PopUpdate";
 import '../petlist/petlist.css';
 
-function Petlist(userId) {
+function Petlist({userId}) {
   const [pets, setPets] = React.useState([]);
   const [pop,setPop]=useState(false)
   const [popTwo,setPopTwo]=useState(false)
