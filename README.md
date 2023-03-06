@@ -16,7 +16,7 @@ Visual Studio Code.
 Live server extension.
 ### Link to webpage
 
-          https://pet-finder-one.vercel.app/home
+          https://pet-finder-one.vercel.app
 
 #### Alternative One
 Open a terminal / command line interface on your computer.

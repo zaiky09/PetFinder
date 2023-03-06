@@ -23,7 +23,7 @@ function Signup({setIsLoggedIn}){
   }
   function handleSubmit(e) {
     e.preventDefault();
-    fetch('http://127.0.0.1:9292/auth/signup', {
+    fetch('https://zamil-petfinder.onrender.com/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
