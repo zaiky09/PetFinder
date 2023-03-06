@@ -3,7 +3,7 @@ import { useNavigate,Link } from "react-router-dom";
 import logo from '../assets/PET FINDER_adobe_express.svg';
 import '../login/login.css';
 
-function Login({setIsLoggedIn}) {
+function Login({setIsLoggedIn, setUserId, userId}) {
  
   const [formData, setFormData] = useState({
     email: "",
@@ -11,6 +11,11 @@ function Login({setIsLoggedIn}) {
   });
   
   let nav = useNavigate();
+
+  function petListAccess(response) {
+    const data = response.data
+    setUserId (data.id)
+  }
 
   function handleChange(e) {
     setFormData({
@@ -35,6 +40,7 @@ function Login({setIsLoggedIn}) {
         .then(response => {
           if (response.ok) {
              setIsLoggedIn(true);
+             response.json().then(petListAccess)
             nav("/home");
           } else {
             throw new Error('Something went wrong');

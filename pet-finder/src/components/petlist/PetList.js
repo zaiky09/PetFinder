@@ -1,36 +1,174 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit,faTrash,faAdd } from "@fortawesome/free-solid-svg-icons";
+import PopAdd from "../pop_ups/PopAdd";
+import PopUpdate from "../pop_ups/PopUpdate";
 import '../petlist/petlist.css';
 
-function Petlist() {
+function Petlist(userId) {
   const [pets, setPets] = React.useState([]);
+  const [pop,setPop]=useState(false)
+  const [popTwo,setPopTwo]=useState(false)
+  const [selectedPetId,setSelectedPetId]=useState(null)
+  const [petData,setPetData]=useState({
+        name: "",
+        image_src: "",
+        breed:"",
+        character: "",
+    })
 
   React.useEffect(() => {
-    fetch("http://shibe.online/api/shibes?count=6&urls=true&httpsUrls=true")
+    fetch(`http://localhost:9292/pet`)
       .then((response) => response.json())
-      .then((data) => setPets(data))
+      .then((data) => setPets(data.data))
       .catch((error) => console.log(error));
   }, []);
 
+  function activatePopTwo() {
+    setPopTwo(!popTwo)
+        }
+
+    const activatePop = (pet) => {
+        setPetData({...pet, id:pet.id})
+        setSelectedPetId(pet.id)
+        setPop(!pop);
+      };
+      
+        function handleChange(e) {
+            setPetData({
+            ...petData,
+            [e.target.name]: e.target.value
+        });
+      }
+
+      // Add pet
+
+      function handleAddPet(newData) {
+        //e.preventDefault();
+        console.log(JSON.stringify({
+          name: newData.name,
+          image_src: newData.image_src,
+          breed: newData.breed,
+          character: newData.character,
+        
+        }));
+        fetch(`http://localhost:9292/pets/create`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            name: newData.name,
+            image_src: newData.image_src,
+            breed: newData.breed,
+            character: newData.character,
+            
+          })
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to add project, are you logged in");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            fetch(`http://localhost:9292/pet`)
+            .then(res => res.json())
+            .then(data => setPets(data.data));
+            activatePopTwo()
+          })
+          .catch((error) => {
+            alert(error);
+            // handle error
+          })
+        }
+      //Update Pet
+
+      function handleUpdatePet(id,newData) {
+      
+         console.log(JSON.stringify({
+          name: newData.name,
+          image_src: newData.image_src,
+          breed: newData.breed,
+          character: newData.character,
+
+        }))
+
+        fetch(`http://localhost:9292/pets/update/${id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              name: newData.name,
+              image_src: newData.image_src,
+              breed: newData.breed,
+              character: newData.character,
+              
+            })
+          })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Failed to update project, are you logged in?');
+            }
+            // handle successful response
+            setPets(pets.map(pet => { // update pets list 
+              if (pet.id === selectedPetId) {
+                return {
+                  ...pet,
+                  name: newData.name,
+                  image_src: newData.image_src,
+                  breed: newData.breed,
+                  character: newData.character,
+
+                
+                }
+              } else {
+                return pet;
+              }
+            }));
+            setSelectedPetId(null)
+          })
+          .catch(error => {
+            alert(error);
+            // handle error
+          })
+      }
+
+      //Delete Pet
+
+      function handleDeletePet(id) {
+        fetch(`http://localhost:9292/pets/destroy/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Failed to delete project, are you logged in?');
+          }
+          // handle successful response
+          setPets(pets.filter(project => project.id !== id));
+        })
+        .catch(error => {
+          alert(error);
+          // handle error
+        })
+    } 
+
+
 //   const [likedPets, setLikedPets] = React.useState([]);
 
-  const handleView = (pet) => {
+//   const handleView = (pet) => {
     // Show a modal or navigate to a new page to display the pet
-    console.log(`Viewing pet ${pet}`);
-  };
+//     return (`Viewing pet ${pet}`);
+//   };
 
-  const handleDelete = (pet) => {
+//   const handleDelete = (pet) => {
     // Remove the pet from the list of pets
-    setPets(pets.filter((p) => p !== pet));
-    console.log(`Deleted pet ${pet}`);
-  };
-
-//   const handleLike = (pet) => {
-//     // Add or remove the pet from the user's liked pets list
-//     if (likedPets.includes(pet)) {
-//       setLikedPets(likedPets.filter((p) => p !== pet));
-//     } else {
-//       setLikedPets([...likedPets, pet]);
-//     }
+//     setPets(pets.filter((p) => p !== pet));
+//     console.log(`Deleted pet ${pet}`);
 //   };
 
   return (
@@ -38,28 +176,34 @@ function Petlist() {
       <div className="album py-5 bg-light" id="list">
         <div className="container">
         <h1 className='text-start mb-5'>Browse Pets</h1>
+        <button onClick={()=>activatePopTwo()} className="text-start" id="add"><FontAwesomeIcon icon={faAdd}></FontAwesomeIcon>Add a Pet</button>
           <div className="row">
             {pets.map((pet, index) => (
               <div className="col-md-4" key={index}>
                 <div className="card mb-4 shadow-sm">
-                  <img src={pet} className="card-img-top" alt="Pet" />
-                  <div className="card-body">
-                    <div className="d-flex justify-content-between align-items-center">
-                      <div className="btn-group">
-                        <button
+                  <img src={pet.image_src} className="card-img-top" alt="Pet" />
+                  <h3 className="card-header">{pet.name}</h3>
+                  <h5 className="card-header">{pet.breed}</h5>
+                  <p className="card-text">{pet.character}</p>
+                  
+                  {/* <div className="card-body"> */}
+                    {/* <div className="d-flex justify-content-between align-items-center"> */}
+                      {/* <div className="btn-group"> */}
+                        
+                        {/* <button
                           type="button"
                           className="btn btn-sm btn-outline-secondary"
                           onClick={() => handleView(pet)}
                         >
                           View
-                        </button>
-                        <button
+                        </button> */}
+                        {/* <button
                           type="button"
                           className="btn btn-sm btn-outline-secondary"
                           onClick={() => handleDelete(pet)}
                         >
                           Delete
-                        </button>
+                        </button> */}
                         {/* <button
                           type="button"
                           className={`btn btn-sm btn-outline-secondary like-button ${
@@ -71,283 +215,34 @@ function Petlist() {
                             ❤️
                           </span>
                         </button> */}
-                      </div>
+                      {/* </div> */}
+                    {/* </div> */}
+                  {/* </div> */}
+                  <div>
+                      <button onClick={()=>activatePop(pet)} id="editable"><FontAwesomeIcon icon={faEdit} />Edit</button>
+                      <button onClick={()=>handleDeletePet(pet.id)}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>Delete</button>
                     </div>
-                  </div>
                 </div>
+                {pop?(<PopUpdate
+                      pop={pop}
+                      petData={petData}
+                      handleUpdatePet={handleUpdatePet}
+                      activatePop={activatePop}
+                      handleChange={handleChange}
+                      pet={pet}/>):null}
               </div>
             ))}
           </div>
         </div>
       </div>
+      {popTwo?(<PopAdd
+            popTwo={popTwo}
+            petData={petData}
+            handleAddPet={handleAddPet}
+            activatePopTwo={activatePopTwo}
+            handleChange={handleChange}/>):(null)}
     </div>
   );
 }
 
 export default Petlist;
-
-
-
-// import React from 'react';
-// import '../petlist/petlist.css';
-
-// function Petlist() {
-//   const [pets, setPets] = React.useState([]);
-
-//   React.useEffect(() => {
-//     fetch("http://shibe.online/api/shibes?count=6&urls=true&httpsUrls=true")
-//       .then((response) => response.json())
-//       .then((data) => setPets(data))
-//       .catch((error) => console.log(error));
-//   }, []);
-
-//   const handleView = (pet) => {
-//     // Show a modal or navigate to a new page to display the pet
-//     console.log(`Viewing pet ${pet}`);
-//   };
-
-//   const handleDelete = (pet) => {
-//     // Remove the pet from the list of pets
-//     setPets(pets.filter((p) => p !== pet));
-//     console.log(`Deleted pet ${pet}`);
-//   };
-
-//   const handleLike = (pet) => {
-//     // Add or remove the pet from the user's liked pets list
-//     console.log(`Liked pet ${pet}`);
-//   };
-
-//   return (
-//     <div>
-//       <div className="album py-5 bg-light" id="list">
-//         <div className="container">
-//           <div className="row">
-//             {pets.map((pet, index) => (
-//               <div className="col-md-4" key={index}>
-//                 <div className="card mb-4 shadow-sm">
-//                   <img src={pet} className="card-img-top" alt="Pet" />
-//                   <div className="card-body">
-//                     <div className="d-flex justify-content-between align-items-center">
-//                       <div className="btn-group">
-//                         <button
-//                           type="button"
-//                           className="btn btn-sm btn-outline-secondary"
-//                           onClick={() => handleView(pet)}
-//                         >
-//                           View
-//                         </button>
-//                         <button
-//                           type="button"
-//                           className="btn btn-sm btn-outline-secondary"
-//                           onClick={() => handleDelete(pet)}
-//                         >
-//                           Delete
-//                         </button>
-//                         <button
-//                           type="button"
-//                           className="btn btn-sm btn-outline-secondary"
-//                           onClick={() => handleLike(pet)}
-//                         >
-//                           Like
-//                         </button>
-//                       </div>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Petlist;
-
-
-
-
-// import React from 'react';
-// import '../petlist/petlist.css';
-
-
-
-
-// function Petlist() {
-//     const [pets, setPets] = React.useState([]);
-  
-//     React.useEffect(() => {
-//       fetch("http://shibe.online/api/shibes?count=6&urls=true&httpsUrls=true")
-//         .then((response) => response.json())
-//         .then((data) => setPets(data))
-//         .catch((error) => console.log(error));
-//     }, []);
-  
-//     return (
-//       <div>
-//         <div className="album py-5 bg-light" id="list">
-//           <div className="container">
-//             <div className="row">
-//               {pets.map((pet, index) => (
-//                 <div className="col-md-4" key={index}>
-//                   <div className="card mb-4 shadow-sm">
-//                     <img src={pet} className="card-img-top" alt="Pet" />
-//                     <div className="card-body">
-//                       <div className="d-flex justify-content-between align-items-center">
-//                         <div className="btn-group">
-//                           <button
-//                             type="button"
-//                             className="btn btn-sm btn-outline-secondary"
-//                           >
-//                             View
-//                           </button>
-//                           <button
-//                             type="button"
-//                             className="btn btn-sm btn-outline-secondary"
-//                           >
-//                             Edit
-//                           </button>
-//                         </div>
-//                       </div>
-//                     </div>
-//                   </div>
-//                 </div>
-//               ))}
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
-  
-
-// function Petlist () {
-
-
-//     return (
-//         <div>
-           
-//             <div className="album py-5 bg-light" id="list">
-//                 <div className="container">
-//                     <div className="row">
-//                         <h1 className="text-start mb-5" id="header"> BROWSE CATEGORIES </h1> 
-
-//                         <div className="col-md-4">
-//                             <div className="card mb-4 shadow-sm">
-//                                 <img src={cat} className="card-img-top" alt="Cat"/>
-//                                 <div className="card-body">
-//                                     <div className="d-flex justify-content-between align-items-center">
-//                                         <div className="btn-group">
-//                                             <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-//                                             <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
-//                                         </div>
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                         <div className="col-md-4">
-//                             <div className="card mb-4 shadow-sm">
-//                                 <img src={hamster} className="card-img-top" alt="Cat"/>
-//                                 <div className="card-body">
-//                                     <div className="d-flex justify-content-between align-items-center">
-//                                         <div className="btn-group">
-//                                             <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-//                                             <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
-//                                         </div>
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                         <div className="col-md-4">
-//                             <div className="card mb-4 shadow-sm">
-//                                 <img src={dog} className="card-img-top" alt="Cat"/>
-//                                 <div className="card-body">
-//                                     <div className="d-flex justify-content-between align-items-center">
-//                                         <div className="btn-group">
-//                                             <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-//                                             <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
-//                                         </div>
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                         <div className="col-md-4">
-//                             <div className="card mb-4 shadow-sm">
-//                                 <img src={hamster} className="card-img-top" alt="Cat"/>
-//                                 <div className="card-body">
-//                                     <div className="d-flex justify-content-between align-items-center">
-//                                         <div className="btn-group">
-//                                             <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-//                                             <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
-//                                         </div>
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                         <div className="col-md-4">
-//                             <div className="card mb-4 shadow-sm">
-//                                 <img src={cat} className="card-img-top" alt="Cat"/>
-//                                 <div className="card-body">
-//                                     <div className="d-flex justify-content-between align-items-center">
-//                                         <div className="btn-group">
-//                                             <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-//                                             <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
-//                                         </div>
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                         <div className="col-md-4">
-//                             <div className="card mb-4 shadow-sm">
-//                                 <img src={dog} className="card-img-top" alt="Cat"/>
-//                                 <div className="card-body">
-//                                     <div className="d-flex justify-content-between align-items-center">
-//                                         <div className="btn-group">
-//                                             <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-//                                             <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
-//                                         </div>
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-            
-//         </div>
-//     )
-
-// }
-
-// export default Petlist;
-
-// {/* <h1>PET COLLECTION</h1> */}
-//             {/* <div id="carouselExample" class="carousel slide">
-//                 <div class="carousel-inner">
-
-//                     <div class="carousel-item active">
-//                         <img src={cat} class="d-block w-100" alt=cat/>
-//                     </div>
-
-//                     <div class="carousel-item">
-//                         <img src={hamster} class="d-block w-100" alt="..."/>
-//                     </div>
-
-//                     <div class="carousel-item">
-//                         <img src={cat} class="d-block w-100" alt="..."/>
-//                     </div>
-
-//                 </div>
-
-//                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-//                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-//                     <span class="visually-hidden">Previous</span>
-//                 </button>
-
-//                 <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-//                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
-//                     <span class="visually-hidden">Next</span>
-//                 </button>
-
-//             </div> */}
