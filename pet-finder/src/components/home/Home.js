@@ -2,6 +2,7 @@ import React from "react";
 import './home.css';
 import About from "../about/About";
 import Petlist from "../petlist/PetList";
+import Contact from "../contact/Contact";
 
 
 
@@ -22,7 +23,8 @@ function Home() {
             </div>
         </div>
         <Petlist/>
-        <About/>  
+        <About/> 
+        <Contact/> 
     </div>
       
     );       

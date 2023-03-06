@@ -92,9 +92,9 @@ function NavBar({setIsLoggedIn, isLoggedIn}){
                             <li className="nav-item">
                                 <Link className="nav-link active" aria-current="page" to="/about" href="#">About Us</Link>
                             </li>
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                                 <Link className="nav-link" to="/contact" href="#">Contact Us</Link>
-                            </li>
+                            </li> */}
                             <li className="nav-item">
                                 <Link className="nav-link" to="/petlist" href="#">Pet List</Link>
                             </li>
@@ -120,35 +120,5 @@ function NavBar({setIsLoggedIn, isLoggedIn}){
 
 export default NavBar;
 
-
-            // {/* <nav class="navbar bg-body-tertiary bg-custom">
-            //     <div class="container-fluid" >
-            //          #Logoimage and text  
-            //         <img src={logo} alt="Logo" width="70" height="50" class="d-inline-block align-text-top"/>
-            //         <Link class="navbar-brand" to="/home" href="#"> 
-            //         <span class="navbar-brand mb-0 h1">PetFinder</span>
-            //         </Link>
-                    
-
-            //         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            //             <span class="navbar-toggler-icon"></span>
-            //         </button>
-
-            //         <div class="collapse navbar-collapse" id="navbarNav">
-            //             <ul class="navbar-nav">
-            //                 <li class="nav-item">
-            //                 <Link class="nav-link" to="/about">About</Link>
-            //                 </li>
-            //                 <li class="nav-item">
-            //                 <Link class="nav-link" to="/contact">Contact</Link>
-            //                 </li>
-            //                 <li class="nav-item">
-            //                 <Link class="nav-link" to="/" onClick={handleLogout}>Logout</Link>
-            //                 </li>
-            //             </ul>
-            //         </div>
-
-            //     </div>
-            // </nav> */}
 
         
