@@ -157,20 +157,6 @@ function Petlist(userId) {
         })
     } 
 
-
-//   const [likedPets, setLikedPets] = React.useState([]);
-
-//   const handleView = (pet) => {
-    // Show a modal or navigate to a new page to display the pet
-//     return (`Viewing pet ${pet}`);
-//   };
-
-//   const handleDelete = (pet) => {
-    // Remove the pet from the list of pets
-//     setPets(pets.filter((p) => p !== pet));
-//     console.log(`Deleted pet ${pet}`);
-//   };
-
   return (
     <div>
       <div className="album py-5 bg-light" id="list">

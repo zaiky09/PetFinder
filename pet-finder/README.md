@@ -2,6 +2,48 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Description
+This repo represents the frontend functionality of a PetFinder App.
+
+## Installation
+### Requirements
+In order for you to use the content on this repo ensure you have the following:
+
+A computer that runs on either of the following; (Windows 7+, Linux, Mac OS).
+
+nodejs 9.0+
+Visual Studio Code.
+Live server extension.
+### Link to webpage
+
+          bot-battlr-beta.vercel.app/
+
+#### Alternative One
+Open a terminal / command line interface on your computer.
+
+Clone the repo by using the following to create a copy on your local machine:
+
+      git clone git@github.com:zaiky09/PetFinder.git
+
+Change directory to the repo folder:
+
+      cd PetFinder
+
+Open it in Visual Studio Code
+
+      code .
+
+#### Alternative Two
+On the top right corner of this page there is a button labelled Fork.
+
+Click on the button to fork the repo to your own account.
+
+Follow the process in Alternative One above.
+
+Remember to replace your username when cloning.
+
+          git clone https://github.com/your-username-here/PetFinder
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -29,42 +71,30 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### Running the application
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+To run the application, you can use the following steps to run the app.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Run;
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+  - npm install (to install required dependancies).
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+  - npm start (follow the link provided to open the application on your browser).
 
-## Learn More
+#### Deliverables
+A user should be able to:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- register / login to the application.
+- add a new pet.
+- view all the pets they have added.
+- view all the available pets.
+- search for a pet through name or breed.
+- update details of pets they added.
+- remove details of pets they added.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Author
+      Zamil Mozamil Sheikh
+      
+### License
+      MIT
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
