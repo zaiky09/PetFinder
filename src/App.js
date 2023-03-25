@@ -8,37 +8,37 @@ import Signup from './components/signup/Signup';
 import Petlist from './components/petlist/PetList';
 import Contact from './components/contact/Contact';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
+import { PetProvider, usePet} from './components/petcontext/petcontext';
 
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userId, setUserId] = useState(null);
-  // const [pet, setPet] = useState([]);
+  const pets = usePet()
+ 
+console.log(pets)
 
   return (
-    <div className="App">
-      <BrowserRouter>
-      <NavBar
-      isLoggedIn={isLoggedIn}
-      setIsLoggedIn={setIsLoggedIn}/>
-      <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/petlist" element={<Petlist
-        userId={userId}
-        />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/" element={<Login 
-        userId={userId}
-        setUserId={setUserId}
-        isLoggedIn={isLoggedIn}
-        setIsLoggedIn={setIsLoggedIn}/>} />
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
-      </BrowserRouter>
+    <PetProvider>
+      <div className="App">
+        <BrowserRouter>
+
+        <NavBar
+         isLoggedIn={isLoggedIn}
+         setIsLoggedIn={setIsLoggedIn}/>
+         <Routes>
+           <Route path="/home" element={<Home />} />
+           <Route path="/petlist" element={<Petlist />} />
+           <Route path="/about" element={<About />} />
+           <Route path="/contact" element={<Contact />} />
+           <Route path="/" element={<Login 
+           isLoggedIn={isLoggedIn}
+           setIsLoggedIn={setIsLoggedIn}/>} />
+           <Route path="/signup" element={<Signup />} />
+         </Routes>
+        </BrowserRouter>
       
-    </div>
+      </div>
+    </PetProvider>
   );
 }
 
